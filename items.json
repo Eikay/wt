@@ -1,0 +1,25 @@
+[
+	{
+		"id": 1,
+		"name": "Kong Baung (Chicken)",
+		"groupId": 1
+	},
+
+	{
+		"id": 2,
+		"name": "Kong Baung (Pork)",
+		"groupId": 1
+	},
+
+	{
+		"id": 3,
+		"name": "Kyar San Kyaw",
+		"groupId": 1
+	},
+
+	{
+		"id": 4,
+		"name": "Fried Noodle",
+		"groupId": 1
+	}
+]

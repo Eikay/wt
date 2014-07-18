@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>My App</title>
+		<meta name="viewport" content="width=device-width,
+										initial-scale=1.0,
+										maximum-scale=1.0,
+										user-scalable=no,
+										minimal-ui">
+
+		<link rel="stylesheet" href="app.min.css">
+
+		<style>
+			/* TODO */
+
+			/*
+			.app-keypad .app-button {
+				margin-top: 0;
+				margin-bottom: 10px;
+				float: left;
+				margin-right: 10px;
+				height: 3em;
+				padding: 1em 2em;
+			}
+
+			.app-content-row {
+				clear: both;
+			}
+			*/
+
+			.app-keypad .app-button {
+				margin-top: 0;
+				margin-bottom: 1em;
+				padding: 0.5em 0;
+				width: 25%;
+				float: left;
+				margin-right: 5%;
+				font-size: 1.5em;
+
+			}
+
+			.app-keypad .app-input input[type=text] {
+				text-align: right;
+				font-family: "monaco", "monospace";
+				letter-spacing: 0.5em;
+				font-size: 1.1em;
+			}
+			
+			.app-button-large {
+				font-size: 1.5em;
+				padding: 0.5em 0;
+			}
+		</style>
+	</head>
+
+	<body>
+		<div class="app-page" data-page="groups">
+			<div class="app-topbar">
+				<div class="app-title">Groups</div>
+			</div>
+			<div class="app-content">
+				<ul class="app-list app-section"></ul>
+			</div>
+		</div>
+
+		<div class="app-page" data-page="items">
+			<div class="app-topbar">
+				<div class="app-button left" data-back data-autotitle></div>
+				<div class="app-title">Foods</div>
+			</div>
+			<div class="app-content">
+				<ul class="app-list app-section"></ul>
+			</div>
+		</div>
+
+		<div class="app-page" data-page="keypad">
+			<div class="app-topbar">
+				<div class="app-button left" data-back data-autotitle></div>
+				<div class="app-title">Amount</div>
+			</div>
+			<div class="app-content">
+				<div class="app-keypad">
+					<div class="app-section">
+						<div class="app-input">
+							<input type="text" class="app-keypad-display" readonly>
+						</div>
+					</div>
+					<div class="app-list app-section">
+						<div class="app-button" data-val=1>1</div>
+						<div class="app-button" data-val=2>2</div>
+						<div class="app-button" data-val=3>3</div>
+						<div class="app-button" data-val=4>4</div>
+						<div class="app-button" data-val=5>5</div>
+						<div class="app-button" data-val=6>6</div>
+						<div class="app-button" data-val=7>7</div>
+						<div class="app-button" data-val=8>8</div>
+						<div class="app-button" data-val=9>9</div>
+						<div class="app-button" data-val=C>C</div>
+						<div class="app-button" data-val=0>0</div>
+						<div class="app-button" data-val=A>A</div>
+						<div style="clear: both"></div>
+					</div>
+				</div>
+				<div class="app-section">
+					<div class="app-button green app-button-large" id="send-order" data-send-order>Send Order</div>
+				</div>
+			</div>
+		</div>
+
+		<script src="zepto.js"></script>
+		<script src="underscore-min.js"></script>
+		<script src="app.min.js"></script>
+		<script src="config.js"></script>
+		<script src="helpers.js"></script>
+		<script>
+
+			function getEndPoint( name ) {
+
+				var service = config.endPoints[ name ];
+
+				if (service != void(0))	{
+
+					if (service.constructor == String)
+						return {
+							url: service,
+							method: 'GET'
+						}
+
+					else if (service.constructor == Object)
+						return service;
+
+				}
+
+				return false;
+			}
+
+			/**
+			 * @function callback
+			 */
+			function fetchGroups( fn ) {
+				// fetch url and req method
+				var service = getEndPoint( 'groups' );
+				// return xhr
+				return makeRequest( service, fn );
+			}
+
+			/**
+			 * @function callback
+			 */
+			function fetchItems( fn ) {
+				// fetch url and req method
+				var service = getEndPoint( 'items' );
+				// return xhr
+				return makeRequest( service, fn );
+			}
+
+			/**
+			 * @string endPointName
+			 */
+			function reload( endPointName, fn ) {
+				// fetch url and req method
+				var service = getEndPoint( endPointName );
+				// return xhr
+				makeRequest( service, function( res ){
+					// cache to localStorage
+					App.storage( endPointName, res );
+					// callback
+					fn( res );
+				});
+			}
+
+			/**
+			 * @string endPointName
+			 */
+			function load( endPointName, fn ) {
+				// check localStorage first
+				var result = App.storage( endPointName );
+
+				if ( result )
+					fn( result );
+
+				else
+					reload( endPointName, fn );
+			}
+
+			function makeRequest( service, fn ) {
+				// make ajax req
+				return $.ajax({
+					url     : service.url,
+					type    : service.method,
+					dataType: 'json',
+					success : fn,
+					error   : function( e ) { console.log( e ); }
+				});
+			}
+
+			App.controller('groups', function ( page ) {
+
+				load( 'groups', function( groups ){
+
+					var groups = $.map( groups, function( group, index ){
+						var li = "<li class='app-button' data-target='items' data-target-args='{ \"groupId\": "+ group.id +" }'>";
+						li += group.name;
+						li += "</li>";
+	
+						return li;
+					});
+	
+					var appList = $( page ).find( ".app-content > .app-list" );
+	
+					appList.html( groups.join('') );
+	
+					$( appList ).find('li.app-button').rebindDynamic();
+				});
+				
+
+			});
+
+			App.controller('items', function ( page, params ) {
+				var groupId = params.groupId;
+
+				// var items = _.filter( window.items, function( item ){
+				// 	return item.groupId == groupId;
+				// });
+
+				load( 'items', function( items ){
+					items = $.map( items, function( item, index ){
+						return '<li class="app-button" data-item-id='+ item.id +'>'+ item.name +'</li>';
+					});
+
+					var appList = $( page ).find( ".app-content > .app-list" ).html( items.join('') );
+
+					appList.find('li.app-button').rebindDynamic().on('click', function(){
+						App.load('keypad', {
+							'itemId': $(this).data('item-id')
+						});
+					});
+					
+				});
+
+			});
+
+			var keypadMemo = App.createMemo();
+
+			App.controller('keypad', function( page, params ){
+
+				keypadMemo( 'display', '' );
+
+				$(page).find('.app-keypad .app-button[data-val]').on('click', function(){
+					$(page).find('.app-keypad-display').keypadDisplay($(this).data( 'val' ), keypadMemo);
+				});
+
+				$('#send-order').on('click', function(){
+					var count  = keypadMemo( 'display' );
+					var itemId = params.itemId;
+				});
+
+			});
+
+			try {
+				App.restore();
+			} catch (err) {
+				App.load('groups');
+			}
+		</script>
+	</body>
+</html>
