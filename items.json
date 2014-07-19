@@ -1,25 +1,33 @@
 [
 	{
-		"id": 1,
-		"name": "Kong Baung (Chicken)",
+		"MID": 1,
+		"Name": "Kong Baung (Chicken)",
+		"CusPrice": 1000,
+		"CusPrice1": 900,
+		"GroupId": 1
+	},
+
+	{
+		"MID": 2,
+		"Name": "Kong Baung (Pork)",
+		"CusPrice": 1200,
+		"CusPrice1": 900,
+		"GroupId": 1
+	},
+
+	{
+		"MID": 3,
+		"Name": "Kyar San Kyaw",
+		"CusPrice": 1500,
+		"CusPrice1": 1200,
 		"groupId": 1
 	},
 
 	{
-		"id": 2,
-		"name": "Kong Baung (Pork)",
-		"groupId": 1
-	},
-
-	{
-		"id": 3,
-		"name": "Kyar San Kyaw",
-		"groupId": 1
-	},
-
-	{
-		"id": 4,
-		"name": "Fried Noodle",
-		"groupId": 1
+		"MID": 4,
+		"Name": "Fried Noodle",
+		"CusPrice": 1800,
+		"CusPrice1": 1200,
+		"GroupId": 1
 	}
 ]
