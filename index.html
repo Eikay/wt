@@ -188,7 +188,20 @@
 					<div class="app-button green" id="send-order" data-send-order>Send Order</div>		
 				</div>
 			</div>
-			
+		</div>
+
+		<div class="app-page" data-page="report">
+			<div class="app-topbar">
+				<div class="app-button left" data-back data-autotitle></div>
+				<div class="app-button right red" data-logout>Logout</div>
+				<div class="app-title">Reports</div>
+			</div>
+			<div class="app-content">
+					<div class="app-section">
+						<input type="text" class="app-input" placeholder="Request ID">
+						<iframe src="report.html" frameborder="0" style="width: 99%"></iframe>
+					</div>
+				</div>	
 		</div>
 
 		<script src="zepto.js"></script>
@@ -353,6 +366,10 @@
 				$(page).find( '[data-group]' ).on('click', function(){
 					App.load('groups');
 				});
+
+				$(page).find( '[data-report]' ).on('click', function(){
+					App.load('report');
+				});
 			});
 
 			App.controller('groups', function ( page ) {
@@ -495,8 +512,42 @@
 
 					App.TO.add( records );
 
+					if ( ! _.values(orderItems).length ) {
+						alert( "No Item Found!" );
+						App.load( "menu" );
+						return false;
+					}
+
+
+					var recordsToSend = _.map( orderItems, function( count, MID ){
+						return {
+							MID: MID,
+							UID: UID,
+							Qty: count,
+							Pno: p ? 1 : 0,
+						};
+					});
+
 					// send to server
+					var service = getEndPoint( "order" );
+
+					makeRequest( service, function( res ){
+
+						if (res.status == true) {
+							alert( "Successfully sent an order!" );
+							App.order.removeAll();
+							App.load( "menu" );
+						}
+
+					}, {
+						items: recordsToSend 
+					});
+
 				});
+			});
+
+			App.controller('report', function( page ){
+
 			});
 
 			var keypadMemo = App.createMemo();
