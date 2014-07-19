@@ -50,12 +50,59 @@
 				font-size: 1.5em;
 				padding: 0.5em 0;
 			}
+
+			.login input {
+				display: block;
+				border: 1px solid #f1f1f1;
+				margin: 1em 0;
+				border-radius: 4px;
+			}
+
+			input[type=checkbox] {
+				margin-left: 10px;
+				margin-top: 1em;
+				margin-bottom: 1em;
+			}
+
+			table td {
+				padding: 0 0.3em;
+			}
 		</style>
 	</head>
 
 	<body>
+		<div class="app-page" data-page="login">
+			<div class="app-topbar">
+				<div class="app-title">Login</div>
+			</div>
+			<div class="app-content">
+				<div class="app-section">
+					<input type="text" class="app-input green" placeholder="Username" data-username>
+					<input type="password" class="app-input" placeholder="Password" data-password>
+					<label for="p"><input type="checkbox" id="p"> Use custom price</label>
+					<div class="app-button green" data-login>Login</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="app-page" data-page="menu">
+			<div class="app-topbar">
+				<div class="app-title">Utility</div>
+				<div class="app-button right red" data-logout>Logout</div>
+			</div>
+			<div class="app-content">
+				<div class="app-section">
+					<div class="app-button orange" data-update>Update Cache Storage</div>
+					<div class="app-button green" data-group>Show Groups</div>
+					<div class="app-button blue" data-report>Show Report</div>
+				</div>
+			</div>
+		</div>
+
 		<div class="app-page" data-page="groups">
 			<div class="app-topbar">
+				<div class="app-button left" data-back data-autotitle></div>
+				<div class="app-button right red" data-logout>Logout</div>
 				<div class="app-title">Groups</div>
 			</div>
 			<div class="app-content">
@@ -66,6 +113,7 @@
 		<div class="app-page" data-page="items">
 			<div class="app-topbar">
 				<div class="app-button left" data-back data-autotitle></div>
+				<div class="app-button right red" data-logout>Logout</div>
 				<div class="app-title">Foods</div>
 			</div>
 			<div class="app-content">
@@ -76,6 +124,7 @@
 		<div class="app-page" data-page="keypad">
 			<div class="app-topbar">
 				<div class="app-button left" data-back data-autotitle></div>
+				<div class="app-button right red" data-logout>Logout</div>
 				<div class="app-title">Amount</div>
 			</div>
 			<div class="app-content">
@@ -186,15 +235,88 @@
 			}
 
 			function makeRequest( service, fn ) {
+
+				var data = arguments.length == 3 ? arguments[ arguments.length-1 ] : {};
+
 				// make ajax req
 				return $.ajax({
 					url     : service.url,
 					type    : service.method,
+					data    : data,
 					dataType: 'json',
 					success : fn,
 					error   : function( e ) { console.log( e ); }
 				});
 			}
+
+			$('body').on('click', '[data-logout]', function(){
+				App.load('login');
+			});
+
+			App.controller('login', function( page ){
+				$(page).find('[data-login]').on('click', function(){
+
+					var username = $(page).find('[data-username]').val();
+					var password = $(page).find('[data-password]').val();
+					var p = $(page).find( '#p' ).is( ":checked" );
+
+					// fetch endPoint with request method and URL
+					var service = getEndPoint( "auth" );
+
+					makeRequest( service, function( res ){
+
+						if (res.status == true) {
+							App.storage( 'p', p );
+							App.load( "menu" );
+						}
+
+						else {
+							alert( "Invalid Login!!!" );
+						}
+
+					}, {
+						username: username,
+						password: password
+					})
+
+					// load( "users", function( users ){
+
+					// 	var result = _.filter( users, function( user ){
+					// 		return user.Username == username && user.Password == password;
+					// 	});
+
+					// 	if ( result.length ) {
+					// 		App.load("menu");
+					// 	}
+					// });
+
+				});
+			});
+
+			App.controller('menu', function( page ){
+				$(page).find( '[data-update]' ).on('click', function(){
+
+					var text = $(this).text();
+					$(this).text('Updating...');
+
+					var flags = [ false, false ]; 
+
+					reload( "groups", function(){ flags[0] = true });
+					reload( "items", function(){ flags[1] = true });
+
+					var that = this;
+					var timerId = setInterval(function(){
+						if (flags.indexOf( false ) == -1) {
+							$(that).text( text );
+							clearInterval( timerId );
+						}
+					}, 1000);
+				});
+
+				$(page).find( '[data-group]' ).on('click', function(){
+					App.load('groups');
+				});
+			});
 
 			App.controller('groups', function ( page ) {
 
@@ -262,7 +384,7 @@
 			try {
 				App.restore();
 			} catch (err) {
-				App.load('groups');
+				App.load('login');
 			}
 		</script>
 	</body>
