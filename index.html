@@ -171,7 +171,7 @@
 								<th>Price</th>
 								<th>Qty</th>
 								<th>Amount</th>
-								<th>TNo.</th>
+								<!--<th>TNo.</th>-->
 								<th>PNo.</th>
 								<th></th>
 							</tr>		
@@ -180,8 +180,12 @@
 							
 						</tbody>
 					</table>			
+					
+					<div style="text-align: right; font-size: 1.2em; margin-right: 2em">
+						<b>Total: <span data-total></span></b>
+					</div>	
 
-					<div class="app-button green">Send Order</div>		
+					<div class="app-button green" id="send-order" data-send-order>Send Order</div>		
 				</div>
 			</div>
 			
@@ -410,6 +414,7 @@
 			App.controller('order', function ( page ) {
 				var items = App.order.all();
 				var menuItems = App.storage( "items" );
+				var total = 0;
 
 				var rows = _.map( items, function( count, itemId ){
 					var item = _.find( menuItems, function( i ){
@@ -419,8 +424,10 @@
 					var price = App.storage("p") ? item.CusPrice1 : item.CusPrice;
 					var amount = parseInt( price ) * parseInt( count );
 
-					var tno = "100";
-					var pno = "100";
+					total += amount;
+
+					// var tno = "100";
+					var pno = App.storage("p") ? 1 : 0;
 
 					var _tr = '';
 
@@ -428,7 +435,7 @@
 					_tr += '<td style=text-align:right>' + price + '</td>';
 					_tr += '<td style=text-align:right><button data-amount>' + count + '</button></td>';
 					_tr += '<td style=text-align:right>' + amount + '</td>';
-					_tr += '<td style=text-align:right>' + tno + '</td>';
+					// _tr += '<td style=text-align:right>' + tno + '</td>';
 					_tr += '<td style=text-align:right>' + pno + '</td>';
 					_tr += '<td><button data-remove>Remove</button></td>';
 
@@ -438,6 +445,8 @@
 				});
 
 				$(page).find('tbody').html( rows.join('') );
+
+				$(page).find('[data-total]').text( total );
 
 				$(page).find('tbody').on('click', '[data-amount]', function(){
 
