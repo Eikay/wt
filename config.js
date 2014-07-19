@@ -13,7 +13,7 @@ var config = {
 
 		'order' : {
 
-			'url'   : '',
+			'url'   : 'http://localhost:8000/server.php?f=order.json',
 			'method': 'POST'	
 
 		}
