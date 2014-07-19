@@ -1,0 +1,13 @@
+[
+	{
+		"UID": 1,
+		"Username": "gmx",
+		"Password": "hello"
+	},
+
+	{
+		"UID": 2,
+		"Username": "gmx",
+		"Password": "world"
+	}
+]
