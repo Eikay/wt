@@ -472,9 +472,9 @@
 					$(page).find('.app-keypad-display').keypadDisplay($(this).data( 'val' ), keypadMemo);
 				});
 
-				$('#send-order').on('click', function(){
+				$(page).find('#ok').on('click', function(){
 					var count  = keypadMemo( 'display' );
-					var itemId = params.itemId;
+					params.fn( count );
 				});
 
 			});
