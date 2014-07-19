@@ -156,6 +156,11 @@
 			delete items[ id ];
 			App.storage( "orderItems", items );
 		},
+
+		removeAll: function() {
+			items = {};
+			App.storage( "orderItems", items );
+		}
 	};	
 
 	App.order = order;
