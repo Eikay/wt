@@ -122,3 +122,42 @@
 
 })( App );
 
+(function( App ){
+	
+	var items = App.storage( "orderItems" ) || {};
+
+	var order = {
+
+		getItem: function( id ) {
+			return items[ id ];
+		},
+
+		all: function() {
+			return items;
+		},
+
+		setItem: function( id, count ) {
+			id = parseInt( id );
+			items[ id ] = parseInt( count );
+			App.storage( "orderItems", items );
+		},
+
+		addItem: function( id, count ) {
+			id = parseInt( id );
+
+			if (items[ id ] == void(0)) 
+				items[ id ] = 0;
+
+			items[ id ] += parseInt( count );
+			App.storage( "orderItems", items );
+		},
+
+		removeItem: function( id, count ) {
+			delete items[ id ];
+			App.storage( "orderItems", items );
+		},
+	};	
+
+	App.order = order;
+
+})( App );
