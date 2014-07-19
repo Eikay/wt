@@ -161,3 +161,20 @@
 	App.order = order;
 
 })( App );
+
+(function( App ){
+	
+	var items = App.storage( "TO" ) || [];
+
+	var TO = {
+
+		add: function(record) {
+			items.push( record );
+			App.storage( "TO", record );
+		}
+
+	};	
+
+	App.TO = TO;
+
+})( App );

@@ -303,6 +303,7 @@
 
 						if (res.status == true) {
 							App.storage( 'p', p );
+							App.storage( 'UID', res.UID );
 							App.load( "menu" );
 						}
 
@@ -468,6 +469,33 @@
 
 				$(page).find( '[data-menu]' ).on('click', function(){
 					App.load('menu');
+				});
+
+				$(page).find('#send-order').on('click', function(){
+					// save to local storage first
+					var UID = App.storage( 'UID' );
+					var orderItems = App.order.all();
+					var items = App.storage( "items" );
+					var p = App.storage( "p" );
+
+					var records = _.map( orderItems, function( count, MID ){
+
+						var item = _.find(items, function( item ) { return item.MID == MID });
+						var price = p ? item.CusPrice1 : item.CusPrice;
+
+						return {
+							UID: UID,
+							MID: MID,
+							Qty: count,
+							Price: price,
+							Amount: parseInt(count) * parseInt(price),
+							Pno: p ? 1 : 0
+						};
+					});
+
+					App.TO.add( records );
+
+					// send to server
 				});
 			});
 
