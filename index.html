@@ -312,22 +312,26 @@
 					// fetch endPoint with request method and URL
 					var service = getEndPoint( "auth" );
 
-					makeRequest( service, function( res ){
+					// makeRequest( service, function( res ){
 
-						if (res.status == true) {
-							App.storage( 'p', p );
-							App.storage( 'UID', res.UID );
-							App.load( "menu" );
-						}
+					// 	if (res.status == true) {
+					// 		App.storage( 'p', p );
+					// 		App.storage( 'UID', res.UID );
+					// 		App.load( "menu" );
+					// 	}
 
-						else {
-							alert( "Invalid Login!!!" );
-						}
+					// 	else {
+					// 		alert( "Invalid Login!!!" );
+					// 	}
 
-					}, {
-						username: username,
-						password: password
-					})
+					// }, {
+					// 	username: username,
+					// 	password: password
+					// })
+
+					App.storage( 'p', p );
+					App.storage( 'UID', 1 );
+					App.load( 'menu' );
 
 					// load( "users", function( users ){
 
@@ -531,17 +535,21 @@
 					// send to server
 					var service = getEndPoint( "order" );
 
-					makeRequest( service, function( res ){
+					// makeRequest( service, function( res ){
 
-						if (res.status == true) {
-							alert( "Successfully sent an order!" );
-							App.order.removeAll();
-							App.load( "menu" );
-						}
+					// 	if (res.status == true) {
+					// 		alert( "Successfully sent an order!" );
+					// 		App.order.removeAll();
+					// 		App.load( "menu" );
+					// 	}
 
-					}, {
-						items: recordsToSend 
-					});
+					// }, {
+					// 	items: recordsToSend 
+					// });
+
+					alert( "Successfully sent an order!" );
+					App.order.removeAll();
+					App.load( "menu" );
 
 				});
 			});
