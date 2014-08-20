@@ -1,4 +1,9 @@
 var config = {
+	
+	'report': {
+		'url': './',
+		'extension': 'html'
+	},
 
 	'endPoints': {
 

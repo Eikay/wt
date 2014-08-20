@@ -125,41 +125,124 @@
 (function( App ){
 	
 	var items = App.storage( "orderItems" ) || {};
+	var tnos  = App.storage( "orderTnos" ) || {};
+	var pnos  = App.storage( "orderPnos" ) || {};
 
 	var order = {
+		// TODO: really need Facades
+		getItem: function( id, type ) {
+			if (type == void(0) || type == 'qty') {
+				if (items[ id ] == void(0))
+					return 0;
 
-		getItem: function( id ) {
-			return items[ id ];
+				return items[ id ];
+			}
+
+			else if (type == 'tno') {
+				if (tnos[ id ] == void(0))
+					return 0;
+
+				return tnos[ id ];
+			}
+
+			else if (type == 'pno') {
+				if (pnos[ id ] == void(0))
+					return 0;
+
+				return pnos[ id ];
+			}
+
 		},
 
-		all: function() {
-			return items;
+		all: function( type ) {
+			if (type == void(0) || type == 'qty') {
+				return items;
+			}
 		},
 
-		setItem: function( id, count ) {
+		setItem: function( id, count, type ) {
 			id = parseInt( id );
-			items[ id ] = parseInt( count );
-			App.storage( "orderItems", items );
+
+			if (type == void(0) || type == 'qty') {
+				items[ id ] = parseInt( count );
+				App.storage( "orderItems", items );
+			}
+
+			else if (type == 'tno') {
+				tnos[ id ] = parseInt( count );
+				App.storage( "orderTnos", tnos );
+			}
+
+			else if (type == 'pno') {
+				pnos[ id ] = parseInt( count );
+				App.storage( "orderPnos", pnos );
+			}
 		},
 
-		addItem: function( id, count ) {
+		addItem: function( id, count, type ) {
 			id = parseInt( id );
 
-			if (items[ id ] == void(0)) 
-				items[ id ] = 0;
+			if (type == void(0) || type == 'qty') {
+				if (items[ id ] == void(0)) 
+					items[ id ] = 0;
 
-			items[ id ] += parseInt( count );
-			App.storage( "orderItems", items );
+				items[ id ] += parseInt( count );
+				App.storage( "orderItems", items );
+			}
+
+			else if (type == 'pno') {
+				if (pnos[ id ] == void(0)) 
+					pnos[ id ] = 0;
+
+				pnos[ id ] += parseInt( count );
+				App.storage( "orderPnos", pnos );
+			}
+
+			else if (type == 'tno') {
+				if (tnos[ id ] == void(0)) 
+					tnos[ id ] = 0;
+
+				tnos[ id ] += parseInt( count );
+				App.storage( "orderTnos", tnos );
+			}
+
 		},
 
-		removeItem: function( id, count ) {
-			delete items[ id ];
-			App.storage( "orderItems", items );
+		removeItem: function( id, count, type ) {
+			if (type == void(0) || type == 'qty') {
+				delete items[ id ];
+				App.storage( "orderItems", items );
+			}
+
+			else if (type == 'pnos') {
+				delete items[ id ];
+				App.storage( "orderPnos", pnos );
+			}
+
+			else if (type == 'tnos') {
+				delete items[ id ];
+				App.storage( "orderTnos", tnos );
+			}
+
 		},
 
 		removeAll: function() {
-			items = {};
-			App.storage( "orderItems", items );
+			if (type == void(0) || type == 'qty') {
+				items = {};
+				App.storage( "orderItems", items );
+			}
+
+			else if (type == 'pno') {
+				items = {};
+				App.storage( "orderPnos", pnos );
+
+			}
+
+			else if (type == 'tno') {
+				items = {};
+				App.storage( "orderTnos", tnos );
+			}
+
 		}
 	};	
 
