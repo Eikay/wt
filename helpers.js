@@ -161,7 +161,6 @@
 		},
 
 		setItem: function( id, count, type ) {
-			id = parseInt( id );
 
 			if (type == void(0) || type == 'qty') {
 				items[ id ] = parseInt( count );
@@ -180,7 +179,6 @@
 		},
 
 		addItem: function( id, count, type ) {
-			id = parseInt( id );
 
 			if (type == void(0) || type == 'qty') {
 				if (items[ id ] == void(0)) 
@@ -226,7 +224,7 @@
 
 		},
 
-		removeAll: function() {
+		removeAll: function( type ) {
 			if (type == void(0) || type == 'qty') {
 				items = {};
 				App.storage( "orderItems", items );
