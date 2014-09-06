@@ -431,13 +431,18 @@
 			});
 
 			App.controller('items', function ( page, params ) {
-				var groupId = params.groupId;
 
+				var groupId = params.groupId;
 				// var items = _.filter( window.items, function( item ){
 				// 	return item.groupId == groupId;
 				// });
 
 				load( 'items', function( items ){
+
+					items = _.filter( items, function( item ){
+						return item.GroupId == groupId;
+					});
+
 					items = $.map( items, function( item, index ){
 
 						var price = App.storage( 'p' ) ? item.CusPrice1 : item.CusPrice;
