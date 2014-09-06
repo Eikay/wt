@@ -7,18 +7,18 @@ var config = {
 
 	'endPoints': {
 
-		'groups': 'http://localhost:3000/groups',
-		'items' : 'http://localhost:3000/items',
+		'groups': 'http://192.168.42.114:3000/groups',
+		'items' : 'http://192.168.42.114:3000/items',
 		/* 'users' : 'http://localhost:8000/server.php?f=users.json',*/
 
 		'auth': {
 			'method': 'POST',
-			'url': 'http://localhost:3000/auth'
+			'url': 'http://192.168.42.114:3000/auth'
 		},
 
 		'order' : {
 
-			'url'   : 'http://localhost:3000/order',
+			'url'   : 'http://192.168.42.114:3000/order',
 			'method': 'POST'	
 
 		}
