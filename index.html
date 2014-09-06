@@ -459,6 +459,9 @@
 
 						App.load('keypad', {
 							fn: function( count ) {
+
+								console.log( itemId, count );
+
 								App.order.addItem( itemId, count );
 								console.log( App.order.all() );
 								App.load("order");
@@ -471,6 +474,7 @@
 			});
 
 			App.controller('order', function ( page ) {
+
 				var items = App.order.all();
 				var menuItems = App.storage( "items" );
 				var total = 0;
@@ -581,11 +585,12 @@
 							Amount: parseInt(count) * parseInt(price),
 							// Pno: p ? 1 : 0,
 							Pno: pno,
-							Tno: tno
+							Tno: tno,
+							ReqID: ReqID
 						};
 					});
 
-					App.TO.add( records );
+					// App.TO.add( records );
 
 					if ( ! _.values(orderItems).length ) {
 						alert( "No Item Found!" );
@@ -594,14 +599,14 @@
 					}
 
 
-					var recordsToSend = _.map( orderItems, function( count, MID ){
-						return {
-							MID: MID,
-							UID: UID,
-							Qty: count,
-							Pno: p ? 1 : 0,
-						};
-					});
+					// var recordsToSend = _.map( orderItems, function( count, MID ){
+					// 	return {
+					// 		MID: MID,
+					// 		UID: UID,
+					// 		Qty: count,
+					// 		Pno: p ? 1 : 0,
+					// 	};
+					// });
 
 					// send to server
 					var service = getEndPoint( "order" );
@@ -612,13 +617,17 @@
 							alert( "Successfully sent an order!" );
 							App.order.removeAll();
 							App.load( "menu" );
+
+							window.localStorage.removeItem( 'ReqID' );
 						}
 
 					}, {
-						items: recordsToSend 
+						items: records 
 					});
 
 				});
+
+
 			});
 
 			App.controller('report', function( page ){
