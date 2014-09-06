@@ -93,8 +93,22 @@
 			<div class="app-content">
 				<div class="app-section">
 					<div class="app-button orange" data-update>Update Cache Storage</div>
-					<div class="app-button green" data-group>Show Groups</div>
-					<div class="app-button blue" data-report>Show Report</div>
+					<div class="app-button green" data-request>Request</div>
+					<!-- div class="app-button blue" data-report>Show Report</div -->
+				</div>
+			</div>
+		</div>
+
+		<div class="app-page" data-page="request">
+			<div class="app-topbar">
+				<div class="app-button left" data-back data-autotitle></div>
+				<div class="app-button right red" data-logout>Logout</div>
+				<div class="app-title">Request</div>
+			</div>
+			<div class="app-content">
+				<div class="app-section">
+					<input type="text" class="app-input" placeholder="Request ID" data-request-id>
+					<div class="app-button green" data-groups>Go to Groups</div>
 				</div>
 			</div>
 		</div>
@@ -304,6 +318,19 @@
 				App.load('login');
 			});
 
+			App.controller('request', function( page ){
+				$(page).find( '[data-groups]' ).on('click', function(){
+					var ReqID = $(page).find( '[data-request-id]' ).val();
+
+					if ( ! ReqID.length )
+						alert( 'You must enter req Id.' );
+
+					window.localStorage.setItem( 'ReqID', ReqID );
+
+					App.load( "groups" );
+				});
+			});
+
 			App.controller('login', function( page ){
 				$(page).find('[data-login]').on('click', function(){
 
@@ -365,8 +392,15 @@
 					}, 1000);
 				});
 
-				$(page).find( '[data-group]' ).on('click', function(){
-					App.load('groups');
+				$(page).find( '[data-request]' ).on('click', function(){
+
+					if (window.localStorage.getItem( 'ReqID' )) {
+						App.load('groups');
+					}
+
+					else {
+						App.load('request');
+					}
 				});
 
 				$(page).find( '[data-report]' ).on('click', function(){
@@ -379,7 +413,7 @@
 				load( 'groups', function( groups ){
 
 					var groups = $.map( groups, function( group, index ){
-						var li = "<li class='app-button' data-target='items' data-target-args='{ \"groupId\": "+ group.id +" }'>";
+						var li = "<li class='app-button' data-target='items' data-target-args='{ \"groupId\": \""+ group.id +"\" }'>";
 						li += group.name;
 						li += "</li>";
 	
@@ -520,14 +554,15 @@
 
 				$(page).find('#send-order').on('click', function(){
 					// save to local storage first
-					var UID = App.storage( 'UID' );
+					var UID        = App.storage( 'UID' );
 					var orderItems = App.order.all();
-					var items = App.storage( "items" );
-					var p = App.storage( "p" );
+					var items      = App.storage( "items" );
+					var p          = App.storage( "p" );
+					var ReqID      = window.localStorage.getItem( 'ReqID' );
 
 					var records = _.map( orderItems, function( count, MID ){
 
-						var item = _.find(items, function( item ) { return item.MID == MID });
+						var item  = _.find(items, function( item ) { return item.MID == MID });
 						var price = p ? item.CusPrice1 : item.CusPrice;
 
 						var pno = App.order.getItem( MID, 'pno' );
