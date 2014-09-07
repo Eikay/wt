@@ -473,7 +473,7 @@
 					appList.find('li.app-button').rebindDynamic().on('click', function(){
 
 						var itemId = $(this).data('item-id');
-						
+
 						App.load('keypad', {
 							fn: function( count ) {
 
@@ -512,6 +512,7 @@
 					var _tr = '';
 
 					var pno = App.order.getItem( itemId, 'pno' );
+					pno = pno ? pno : 'N';
 					var tno = App.order.getItem( itemId, 'tno' );
 
 					_tr += '<td style=text-align:left>' + item.Name + '</td>';
