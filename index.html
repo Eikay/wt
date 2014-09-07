@@ -87,13 +87,13 @@
 
 		<div class="app-page" data-page="menu">
 			<div class="app-topbar">
-				<div class="app-title">Utility</div>
+				<div class="app-title"></div>
 				<div class="app-button right red" data-logout>Logout</div>
 			</div>
 			<div class="app-content">
 				<div class="app-section">
-					<div class="app-button orange" data-update>Update Cache Storage</div>
-					<div class="app-button green" data-request>Request</div>
+					<div class="app-button orange" data-update>Update Menu</div>
+					<div class="app-button green" data-request>Table</div>
 					<!-- div class="app-button blue" data-report>Show Report</div -->
 				</div>
 			</div>
@@ -107,7 +107,7 @@
 			</div>
 			<div class="app-content">
 				<div class="app-section">
-					<input type="text" class="app-input" placeholder="Request ID" data-request-id>
+					<input type="text" class="app-input" placeholder="Table Number" data-request-id>
 					<div class="app-button green" data-groups>Go to Groups</div>
 				</div>
 			</div>
@@ -128,10 +128,24 @@
 			<div class="app-topbar">
 				<div class="app-button left" data-back data-autotitle></div>
 				<div class="app-button right red" data-logout>Logout</div>
-				<div class="app-title">Foods</div>
+				<div class="app-title"></div>
 			</div>
 			<div class="app-content">
 				<ul class="app-list app-section"></ul>
+			</div>
+		</div>
+
+		<div class="app-page" data-page="mini-keypad">
+			<div class="app-topbar">
+				<div class="app-button left" data-back data-autotitle></div>
+				<div class="app-button right red" data-logout>Logout</div>
+			</div>	
+
+			<div class="app-content">
+				<div class="app-section">
+					<div class="app-button red" data-val=P>P</div>
+					<div class="app-button green" data-val=F>F</div>
+				</div>
 			</div>
 		</div>
 
@@ -139,7 +153,7 @@
 			<div class="app-topbar">
 				<div class="app-button left" data-back data-autotitle></div>
 				<div class="app-button right red" data-logout>Logout</div>
-				<div class="app-title">Amount</div>
+				<div class="app-title"></div>
 			</div>
 			<div class="app-content">
 				<div class="app-keypad">
@@ -531,8 +545,9 @@
 
 					var itemId = $(this).parents('tr').data('id')
 
-					App.load('keypad', {
+					App.load('mini-keypad', {
 						fn: function( count ){
+							console.log( itemId, count );
 							App.order.setItem( itemId, count, 'pno' );
 							App.load('order');
 						}
@@ -661,6 +676,13 @@
 					params.fn( count );
 				});
 
+			});
+
+			App.controller('mini-keypad', function( page, params ){
+
+				$(page).find('[data-val]').on('click', function(){
+					params.fn($(this).data( 'val' ));
+				});
 			});
 
 			try {
