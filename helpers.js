@@ -163,17 +163,17 @@
 		setItem: function( id, count, type ) {
 
 			if (type == void(0) || type == 'qty') {
-				items[ id ] = parseInt( count );
+				items[ id ] = count
 				App.storage( "orderItems", items );
 			}
 
 			else if (type == 'tno') {
-				tnos[ id ] = parseInt( count );
+				tnos[ id ] = count;
 				App.storage( "orderTnos", tnos );
 			}
 
 			else if (type == 'pno') {
-				pnos[ id ] = parseInt( count );
+				pnos[ id ] = count;
 				App.storage( "orderPnos", pnos );
 			}
 		},
