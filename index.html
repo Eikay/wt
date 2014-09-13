@@ -366,8 +366,10 @@
 				$(page).find( '[data-groups]' ).on('click', function(){
 					var ReqID = $(page).find( '[data-request-id]' ).val();
 					
-					if ( ! ReqID.length )
+					if ( ! ReqID.length ) {
 						alert( 'You must enter req Id.' );
+						return false;
+					}
 
 					window.localStorage.setItem( 'ReqID', ReqID );
 
@@ -611,9 +613,11 @@
 					App.load('groups');
 				});
 
+				var isActive = true;
+
 				$(page).find('#send-order').on('click', function(){
 
-					if ($(this).data( 'is-active' ) == false) {
+					if ( ! isActive ) {
 						return false;				
 					}
 
@@ -668,17 +672,16 @@
 
 					var that = this;
 
-					$(that).data( 'is-active', false );
+					isActive = false;
 					makeRequest( service, function( res ){
 
-						$(that).data( 'is-active', true );
-							
 						if (res.status == true) {
 							alert( "Successfully sent an order!" );
 							App.order.removeAll();
 							App.load( "menu" );
 
 							window.localStorage.removeItem( 'ReqID' );
+							isActive = true;
 						}
 
 					}, {
