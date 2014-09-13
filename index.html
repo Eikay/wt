@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 	<head>
-		<title>My App</title>
+		<title>SMART Waiter</title>
 		<meta name="viewport" content="width=device-width,
 										initial-scale=1.0,
 										maximum-scale=1.0,
@@ -49,6 +49,11 @@
 			.app-button-large {
 				font-size: 1.5em;
 				padding: 0.5em 0;
+				margin-bottom: 1em;
+			}
+
+			input[type=text], input[type=password] {
+				font-size: 1.2em;
 			}
 
 			.login input {
@@ -78,9 +83,12 @@
 			<div class="app-content">
 				<div class="app-section">
 					<input type="text" class="app-input green" placeholder="Username" data-username>
+					<br>
 					<input type="password" class="app-input" placeholder="Password" data-password>
+					<br>
 					<label for="p"><input type="checkbox" id="p"> P</label>
-					<div class="app-button green" data-login>Login</div>
+					<br>
+					<div class="app-button app-button-large green" data-login>Login</div>
 				</div>
 			</div>
 		</div>
@@ -92,8 +100,8 @@
 			</div>
 			<div class="app-content">
 				<div class="app-section">
-					<div class="app-button orange" data-update>Update Menu</div>
-					<div class="app-button green" data-request>Table</div>
+					<div class="app-button app-button-large orange" data-update>Update Menu</div>
+					<div class="app-button app-button-large green" data-request>Table</div>
 					<!-- div class="app-button blue" data-report>Show Report</div -->
 				</div>
 			</div>
@@ -107,8 +115,8 @@
 			</div>
 			<div class="app-content">
 				<div class="app-section">
-					<input type="text" class="app-input" placeholder="Table Number" data-request-id>
-					<div class="app-button green" data-groups>Go to Groups</div>
+					<input type="text" class="app-input" placeholder="Table Number" data-request-id readonly="true">
+					<div class="app-button app-button-large green" data-groups>Go to Groups</div>
 				</div>
 			</div>
 		</div>
@@ -186,36 +194,34 @@
 
 		<div class="app-page" data-page="order">
 			<div class="app-topbar">
-				<div class="app-button left" data-menu>Menu</div>
+				<div class="app-button left" data-groups>Groups</div> 
 				<div class="app-button right red" data-logout>Logout</div>
-				<div class="app-title">Order Item</div>
+				<div class="app-title"></div>
 			</div>
-			<div class="app-content">
-				<div class="app-section">
-					<table>
-						<thead>
-							<tr>
-								<th style="text-align: left">Name</th>
-								<th>Price</th>
-								<th>Qty</th>
-								<th>Amount</th>
-								<!--<th>TNo.</th>-->
-								<th>PNo.</th>
-								<th>TNo.</th>
-								<th></th>
-							</tr>		
-						</thead>
-						<tbody>
-							
-						</tbody>
-					</table>			
-					
-					<div style="text-align: right; font-size: 1.2em; margin-right: 2em">
-						<b>Total: <span data-total></span></b>
-					</div>	
+			<div class="app-content" style="margin: 0.5em 0">
+				<table>
+					<thead>
+						<tr>
+							<th style="text-align: left">Name</th>
+							<th>Price</th>
+							<th>Qty</th>
+							<th>Amount</th>
+							<!--<th>TNo.</th>-->
+							<th>PNo.</th>
+							<th>TNo.</th>
+							<th></th>
+						</tr>		
+					</thead>
+					<tbody>
+						
+					</tbody>
+				</table>			
+				
+				<div style="text-align: right; font-size: 1.2em; margin-right: 2em">
+					<b>Total: <span data-total></span></b>
+				</div>	
 
-					<div class="app-button green" id="send-order" data-send-order>Send Order</div>		
-				</div>
+				<div class="app-button app-button-large green" id="send-order" data-send-order>Send Order</div>		
 			</div>
 		</div>
 
@@ -329,13 +335,37 @@
 			}
 
 			$('body').on('click', '[data-logout]', function(){
-				App.load('login');
+
+				var service = getEndPoint( "logout" );
+
+				makeRequest( service, function( res ){
+					if (res.status == true) {
+						App.load('login');
+					}
+
+				}, {
+					UID: App.storage('UID')
+				});
 			});
 
-			App.controller('request', function( page ){
+			App.controller('request', function( page, params ){
+
+				if (params.count != void(0))	
+					$(page).find('[data-request-id]').val(params.count);
+
+				$(page).find('[data-request-id]').on('click', function(){
+
+					App.load('keypad', {
+						fn: function( count ){
+							App.load('request', { count: count });
+						}
+					});
+
+				}); 
+
 				$(page).find( '[data-groups]' ).on('click', function(){
 					var ReqID = $(page).find( '[data-request-id]' ).val();
-
+					
 					if ( ! ReqID.length )
 						alert( 'You must enter req Id.' );
 
@@ -361,6 +391,7 @@
 							App.storage( 'p', p );
 							App.storage( 'UID', res.UID );
 							App.load( "menu" );
+							alert ("Successfully Login");
 						}
 
 						else {
@@ -576,11 +607,16 @@
 					App.load('order');
 				});
 
-				$(page).find( '[data-menu]' ).on('click', function(){
-					App.load('menu');
+				$(page).find( '[data-groups]' ).on('click', function(){
+					App.load('groups');
 				});
 
 				$(page).find('#send-order').on('click', function(){
+
+					if ($(this).data( 'is-active' ) == false) {
+						return false;				
+					}
+
 					// save to local storage first
 					var UID        = App.storage( 'UID' );
 					var orderItems = App.order.all();
@@ -630,8 +666,13 @@
 					// send to server
 					var service = getEndPoint( "order" );
 
+					var that = this;
+
+					$(that).data( 'is-active', false );
 					makeRequest( service, function( res ){
 
+						$(that).data( 'is-active', true );
+							
 						if (res.status == true) {
 							alert( "Successfully sent an order!" );
 							App.order.removeAll();
