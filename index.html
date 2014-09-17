@@ -367,7 +367,8 @@
 					var ReqID = $(page).find( '[data-request-id]' ).val();
 					
 					if ( ! ReqID.length ) {
-						alert( 'You must enter req Id.' );
+						alert( 'You must enter Table Number.' );
+						App.load('request');
 						return false;
 					}
 
