@@ -70,7 +70,7 @@
 				margin-top: 1em;
 				margin-bottom: 1em;
 			}
-
+b
 			table td {
 				padding: 0 0.3em;
 			}
@@ -101,7 +101,7 @@
 			</div>
 			<div class="app-content">
 				<div class="app-section">
-					<div class="app-button app-button-large orange" data-update>Update Menu</div>
+					<div class="app-button app-button-large orange" data-update>Update Menu ဟင္းပြဲအသစ္မ်ားအား ေခၚတင္မည္။</div>
 					<div class="app-button app-button-large green" data-request>Table</div>
 					<!-- div class="app-button blue" data-report>Show Report</div -->
 				</div>
@@ -154,8 +154,7 @@
 				<div class="app-section">
 					<div class="app-button red" data-val=P>P</div>
 					<div class="app-button green" data-val=F>F</div>
-				
-					
+					<div class="app-button blue" data-val=N>N</div>
 				</div>
 			</div>
 		</div>
@@ -370,8 +369,9 @@
 					var ReqID = $(page).find( '[data-request-id]' ).val();
 					
 					if ( ! ReqID.length ) {
-						return false;
+						
 						alert( '!You must enter Table Number.(Table Number ထည္႔ပါ။)' );
+						return false;
 						App.load('request');
 					}
 
@@ -549,8 +549,8 @@
 					var _tr = '';
 
 					var pno = App.order.getItem( itemId, 'pno' );
-					pno=pno?pno:'N';
 					
+					pno=pno?pno:'N';	
 					var tno = App.order.getItem( itemId, 'tno' );
 
 					_tr += '<td style=text-align:left>' + item.Name + '</td>';
@@ -591,7 +591,7 @@
 						fn: function( count ){
 							console.log( itemId, count );
 							App.order.setItem( itemId, count, 'pno');	
-											
+							//pno=pno?pno:'N';				
 							App.load('order');
 						}
 					})	
@@ -640,6 +640,8 @@
 						var price = p ? item.CusPrice1 : item.CusPrice;
 
 						var pno = App.order.getItem( MID, 'pno' );
+						//pno=pno?pno:'N';	
+						
 						var tno = App.order.getItem( MID, 'tno' );
 
 						return {
@@ -658,7 +660,7 @@
 					// App.TO.add( records );
 
 					if ( ! _.values(orderItems).length ) {
-						alert( "No Item Found!(ဟင္းပြဲစာရင္း မရွိပါ။)" );
+						alert( "No Item Found!(ဟင္းပြဲစာရင္း မရွိပါ။)" );						
 						App.load( "menu" );
 						return false;
 					}
