@@ -92,7 +92,6 @@
 				</div>
 			</div>
 		</div>
-
 		<div class="app-page" data-page="menu">
 			<div class="app-topbar">
 				<div class="app-title"></div>
@@ -116,7 +115,7 @@
 			<div class="app-content">
 				<div class="app-section">
 					<input type="text" class="app-input" placeholder="Table Number" data-request-id readonly="true">
-					<div class="app-button app-button-large green" data-groups>Go to Groups</div>
+					<div class="app-button app-button-large green" data-groups>Go to Menu Groups</div>
 				</div>
 			</div>
 		</div>
@@ -125,7 +124,7 @@
 			<div class="app-topbar">
 				<div class="app-button left" data-back data-autotitle></div>
 				<div class="app-button right red" data-logout>Logout</div>
-				<div class="app-title">Groups</div>
+				<div class="app-title">Menu Groups</div>
 			</div>
 			<div class="app-content">
 				<ul class="app-list app-section"></ul>
@@ -153,6 +152,8 @@
 				<div class="app-section">
 					<div class="app-button red" data-val=P>P</div>
 					<div class="app-button green" data-val=F>F</div>
+				
+					
 				</div>
 			</div>
 		</div>
@@ -194,7 +195,7 @@
 
 		<div class="app-page" data-page="order">
 			<div class="app-topbar">
-				<div class="app-button left" data-groups>Groups</div> 
+				<div class="app-button left" data-groups>Menu Groups</div> 
 				<div class="app-button right red" data-logout>Logout</div>
 				<div class="app-title"></div>
 			</div>
@@ -202,7 +203,7 @@
 				<table>
 					<thead>
 						<tr>
-							<th style="text-align: left">Name</th>
+							<th style="text-align: left">Menu</th>
 							<th>Price</th>
 							<th>Qty</th>
 							<th>Amount</th>
@@ -367,9 +368,9 @@
 					var ReqID = $(page).find( '[data-request-id]' ).val();
 					
 					if ( ! ReqID.length ) {
-						alert( 'You must enter Table Number.' );
-						App.load('request');
 						return false;
+						alert( '!You must enter Table Number.(Table Number ထည္႔ပါ။)' );
+						App.load('request');
 					}
 
 					window.localStorage.setItem( 'ReqID', ReqID );
@@ -394,11 +395,11 @@
 							App.storage( 'p', p );
 							App.storage( 'UID', res.UID );
 							App.load( "menu" );
-							alert ("Successfully Login");
+							alert ("Successfully Login (ဝင္ေရာက္မႈ အဆင္ေျပပါသည္။)");
 						}
 
 						else {
-							alert( "Invalid Login!!!" );
+							alert( "Invalid Login!!!(အမည္၊ စကားဝွက္ ျပန္လည္စစ္ေဆးပါ။)" );
 						}
 
 					}, {
@@ -546,7 +547,8 @@
 					var _tr = '';
 
 					var pno = App.order.getItem( itemId, 'pno' );
-					pno = pno ? pno : 'N';
+					pno=pno?pno:'N';
+					
 					var tno = App.order.getItem( itemId, 'tno' );
 
 					_tr += '<td style=text-align:left>' + item.Name + '</td>';
@@ -586,7 +588,8 @@
 					App.load('mini-keypad', {
 						fn: function( count ){
 							console.log( itemId, count );
-							App.order.setItem( itemId, count, 'pno' );
+							App.order.setItem( itemId, count, 'pno');	
+											
 							App.load('order');
 						}
 					})	
@@ -653,7 +656,7 @@
 					// App.TO.add( records );
 
 					if ( ! _.values(orderItems).length ) {
-						alert( "No Item Found!" );
+						alert( "No Item Found!(ဟင္းပြဲစာရင္း မရွိပါ။)" );
 						App.load( "menu" );
 						return false;
 					}
@@ -677,7 +680,7 @@
 					makeRequest( service, function( res ){
 
 						if (res.status == true) {
-							alert( "Successfully sent an order!" );
+							alert( "Successfully sent an order!(ဟင္းပြဲမွာ ျပီးပါျပီ။)" );
 							App.order.removeAll();
 							App.load( "menu" );
 
