@@ -70,7 +70,7 @@
 				margin-top: 1em;
 				margin-bottom: 1em;
 			}
-b
+
 			table td {
 				padding: 0 0.3em;
 			}
@@ -101,7 +101,7 @@ b
 			</div>
 			<div class="app-content">
 				<div class="app-section">
-					<div class="app-button app-button-large orange" data-update>Update Menu ဟင္းပြဲအသစ္မ်ားအား ေခၚတင္မည္။</div>
+					<div class="app-button app-button-large orange" data-update>Update Menu (ဟင္းပြဲအသစ္မ်ားအား ေခၚတင္မည္။)</div>
 					<div class="app-button app-button-large green" data-request>Table</div>
 					<!-- div class="app-button blue" data-report>Show Report</div -->
 				</div>
@@ -370,7 +370,7 @@ b
 					
 					if ( ! ReqID.length ) {
 						
-						alert( '!You must enter Table Number.(Table Number ထည္႔ပါ။)' );
+						alert( '!You must enter Table Number.(စားပြဲအမွတ္ ထည္႔ပါ။)' );
 						return false;
 						App.load('request');
 					}
@@ -401,7 +401,7 @@ b
 						}
 
 						else {
-							alert( "Invalid Login!!!(အမည္၊ စကားဝွက္ ျပန္လည္စစ္ေဆးပါ။)" );
+							alert( "Invalid Login!!! (အမည္၊ စကားဝွက္ မွားေနျခင္း (သုိ႔) အသံုးျပဳထားျပီး ျဖစ္၍ ျပန္လည္စစ္ေဆးပါ။)" );
 						}
 
 					}, {
@@ -660,7 +660,7 @@ b
 					// App.TO.add( records );
 
 					if ( ! _.values(orderItems).length ) {
-						alert( "No Item Found!(ဟင္းပြဲစာရင္း မရွိပါ။)" );						
+						alert( "No Item Found! (ဟင္းပြဲစာရင္း မရွိပါ။)" );						
 						App.load( "menu" );
 						return false;
 					}
@@ -684,7 +684,7 @@ b
 					makeRequest( service, function( res ){
 
 						if (res.status == true) {
-							alert( "Successfully sent an order!(ဟင္းပြဲမွာ ျပီးပါျပီ။)" );
+							alert( "Successfully sent an order! (ဟင္းပြဲမွာျပီးပါျပီ။)" );
 							App.order.removeAll();
 							App.load( "menu" );
 
