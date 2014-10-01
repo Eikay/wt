@@ -84,7 +84,7 @@
 			</div>
 			<div class="app-content">
 				<div class="app-section">
-					<input type="text" class="app-input green" placeholder="Username" data-username>
+					<input type="text" class="app-input green" placeholder="User Name" data-username>
 					<br>
 					<input type="password" class="app-input" placeholder="Password" data-password>
 					<br>
@@ -395,9 +395,10 @@
 
 						if (res.status == true) {
 							App.storage( 'p', p );
-							App.storage( 'UID', res.UID );
+							App.storage( 'UID', res.WaiterID );
 							App.load( "menu" );
 							alert ("Successfully Login (ဝင္ေရာက္မႈ အဆင္ေျပပါသည္။)");
+
 						}
 
 						else {
@@ -550,7 +551,7 @@
 
 					var pno = App.order.getItem( itemId, 'pno' );
 					
-					pno=pno?pno:'N';	
+					//'pno'=pno?pno:'N';	
 					var tno = App.order.getItem( itemId, 'tno' );
 
 					_tr += '<td style=text-align:left>' + item.Name + '</td>';
@@ -590,8 +591,9 @@
 					App.load('mini-keypad', {
 						fn: function( count ){
 							console.log( itemId, count );
+
 							App.order.setItem( itemId, count, 'pno');	
-							//pno=pno?pno:'N';				
+							
 							App.load('order');
 						}
 					})	
