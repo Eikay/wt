@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
 	<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 		<title>SMART Waiter</title>
 		<meta name="viewport" content="width=device-width,
 										initial-scale=1.0,
@@ -82,13 +83,13 @@
 			</div>
 			<div class="app-content">
 				<div class="app-section">
-					<input type="text" class="app-input green" placeholder="Username" data-username>
+					<input type="text" class="app-input green" placeholder="Waiter ID" data-waiterID>
 					<br>
 					<input type="password" class="app-input" placeholder="Password" data-password>
 					<br>
 					<label for="p"><input type="checkbox" id="p"> P</label>
 					<br>
-					<div class="app-button app-button-large green" data-login>Login</div>
+					<div class="app-button app-button-large green" data-login>Login (ဝင္မည္)</div>
 				</div>
 			</div>
 		</div>
@@ -96,12 +97,12 @@
 		<div class="app-page" data-page="menu">
 			<div class="app-topbar">
 				<div class="app-title"></div>
-				<div class="app-button right red" data-logout>Logout</div>
+				<div class="app-button right red" data-logout>Logout (ထြက္မည္)</div>
 			</div>
 			<div class="app-content">
 				<div class="app-section">
-					<div class="app-button app-button-large orange" data-update>Update Menu</div>
-					<div class="app-button app-button-large green" data-request>Table</div>
+					<div class="app-button app-button-large orange" data-update>Update Menu (ဟင္းပြဲစာရင္း ယူရန္)</div>
+					<div class="app-button app-button-large green" data-request>Table (စားပြဲနံပါတ္)</div>
 					<!-- div class="app-button blue" data-report>Show Report</div -->
 				</div>
 			</div>
@@ -110,13 +111,13 @@
 		<div class="app-page" data-page="request">
 			<div class="app-topbar">
 				<div class="app-button left" data-back data-autotitle></div>
-				<div class="app-button right red" data-logout>Logout</div>
+				<div class="app-button right red" data-logout>Logout (ထြက္မည္)</div>
 				<div class="app-title">Request</div>
 			</div>
 			<div class="app-content">
 				<div class="app-section">
 					<input type="text" class="app-input" placeholder="Table Number" data-request-id readonly="true">
-					<div class="app-button app-button-large green" data-groups>Go to Groups</div>
+					<div class="app-button app-button-large green" data-groups>Go to Groups (အုပ္စုစာရင္းသုိ႔)</div>
 				</div>
 			</div>
 		</div>
@@ -124,8 +125,8 @@
 		<div class="app-page" data-page="groups">
 			<div class="app-topbar">
 				<div class="app-button left" data-back data-autotitle></div>
-				<div class="app-button right red" data-logout>Logout</div>
-				<div class="app-title">Groups</div>
+				<div class="app-button right red" data-logout>Logout (ထြက္မည္)</div>
+				<div class="app-title">Groups (အုပ္စုစာရင္း)</div>
 			</div>
 			<div class="app-content">
 				<ul class="app-list app-section"></ul>
@@ -135,7 +136,7 @@
 		<div class="app-page" data-page="items">
 			<div class="app-topbar">
 				<div class="app-button left" data-back data-autotitle></div>
-				<div class="app-button right red" data-logout>Logout</div>
+				<div class="app-button right red" data-logout>Logout (ထြက္မည္)</div>
 				<div class="app-title"></div>
 			</div>
 			<div class="app-content">
@@ -146,13 +147,14 @@
 		<div class="app-page" data-page="mini-keypad">
 			<div class="app-topbar">
 				<div class="app-button left" data-back data-autotitle></div>
-				<div class="app-button right red" data-logout>Logout</div>
+				<div class="app-button right red" data-logout>Logout (ထြက္မည္)</div>
 			</div>	
 
 			<div class="app-content">
 				<div class="app-section">
 					<div class="app-button red" data-val=P>P</div>
 					<div class="app-button green" data-val=F>F</div>
+					<div class="app-button blue" data-val=N>N</div>
 				</div>
 			</div>
 		</div>
@@ -160,7 +162,7 @@
 		<div class="app-page" data-page="keypad">
 			<div class="app-topbar">
 				<div class="app-button left" data-back data-autotitle></div>
-				<div class="app-button right red" data-logout>Logout</div>
+				<div class="app-button right red" data-logout>Logout (ထြက္မည္)</div>
 				<div class="app-title"></div>
 			</div>
 			<div class="app-content">
@@ -194,8 +196,8 @@
 
 		<div class="app-page" data-page="order">
 			<div class="app-topbar">
-				<div class="app-button left" data-groups>Groups</div> 
-				<div class="app-button right red" data-logout>Logout</div>
+				<div class="app-button left" data-groups>Groups (အုပ္စုစာရင္း)</div> 
+				<div class="app-button right red" data-logout>Logout (ထြက္မည္)</div>
 				<div class="app-title"></div>
 			</div>
 			<div class="app-content" style="margin: 0.5em 0">
@@ -221,14 +223,14 @@
 					<b>Total: <span data-total></span></b>
 				</div>	
 
-				<div class="app-button app-button-large green" id="send-order" data-send-order>Send Order</div>		
+				<div class="app-button app-button-large green" id="send-order" data-send-order>Send Order (မွာမည္)</div>		
 			</div>
 		</div>
 
 		<div class="app-page" data-page="report">
 			<div class="app-topbar">
 				<div class="app-button left" data-back data-autotitle></div>
-				<div class="app-button right red" data-logout>Logout</div>
+				<div class="app-button right red" data-logout>Logout (ထြက္မည္)</div>
 				<div class="app-title">Reports</div>
 			</div>
 			<div class="app-content">
@@ -344,7 +346,7 @@
 					}
 
 				}, {
-					UID: App.storage('UID')
+					WaiterID: App.storage('WaiterID')
 				});
 			});
 
@@ -378,7 +380,7 @@
 			App.controller('login', function( page ){
 				$(page).find('[data-login]').on('click', function(){
 
-					var username = $(page).find('[data-username]').val();
+					var waiterID = $(page).find('[data-waiterID]').val();
 					var password = $(page).find('[data-password]').val();
 					var p = $(page).find( '#p' ).is( ":checked" );
 
@@ -389,17 +391,17 @@
 
 						if (res.status == true) {
 							App.storage( 'p', p );
-							App.storage( 'UID', res.UID );
+							App.storage( 'WaiterID', res.WaiterID );
 							App.load( "menu" );
-							alert ("Successfully Login");
+							alert ("Successfully Login (ဝင္ေရာက္မႈ ေအာင္ျမင္သည္)");
 						}
 
 						else {
-							alert( "Invalid Login!!!" );
+							alert( "Invalid Login!!! (ဝင္ေရာက္မႈ အဆင္မေျပပါ။ (NetWork အဆင္မေျပျခင္း၊Waiter ID ႏွင္႔ Password မွားေနျခင္း (သုိ႔) အသံုးျပဳထားေနသူရွိျခင္း))" );
 						}
 
 					}, {
-						username: username,
+						waiterID: waiterID,
 						password: password
 					})
 
@@ -618,7 +620,7 @@
 					}
 
 					// save to local storage first
-					var UID        = App.storage( 'UID' );
+					var WaiterID        = App.storage( 'WaiterID' );
 					var orderItems = App.order.all();
 					var items      = App.storage( "items" );
 					var p          = App.storage( "p" );
@@ -633,7 +635,7 @@
 						var tno = App.order.getItem( MID, 'tno' );
 
 						return {
-							UID: UID,
+							WaiterID: WaiterID,
 							MID: MID,
 							Qty: count,
 							Price: price,
@@ -648,7 +650,7 @@
 					// App.TO.add( records );
 
 					if ( ! _.values(orderItems).length ) {
-						alert( "No Item Found!" );
+						alert( "No Item Found! (ဟင္းပြဲစာရင္းမရွိပါ)" );
 						App.load( "menu" );
 						return false;
 					}
@@ -674,7 +676,7 @@
 						$(that).data( 'is-active', true );
 							
 						if (res.status == true) {
-							alert( "Successfully sent an order!" );
+							alert( "Successfully sent an order! (မွာျပီးပါျပီ)" );
 							App.order.removeAll();
 							App.load( "menu" );
 
