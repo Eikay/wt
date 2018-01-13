@@ -17,7 +17,7 @@
         Hardeep Shoker 
     </author>
       <!-- all platforms -->
-      <preference name="phonegap-version" value="cli-6.0.0" />
+      <preference name="phonegap-version" value="cli-6.4.0" />
       <preference name="orientation" value="landscape" />
       <preference name="fullscreen" value="ei.true" />
 
