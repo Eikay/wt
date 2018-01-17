@@ -7,6 +7,11 @@
 
 	{
 		"UID": 2,
+		"Username": "masabai",
+		"Password": "sabai$bitbuck"
+	}
+	{
+		"UID": 3,
 		"Username": "gmx",
 		"Password": "world"
 	}
