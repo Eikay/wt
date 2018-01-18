@@ -28,6 +28,7 @@ window.onerror = function(msg, url, line, col, error) {
    // Internet Explorer) will be suppressed.
    return suppressErrorAlert;
 };
+
 </script>
 		<style>
 			/* TODO */
@@ -397,8 +398,9 @@ window.onerror = function(msg, url, line, col, error) {
 			});
 
 			App.controller('login', function( page ){
+				alert('page load');
 				$(page).find('[data-login]').on('click', function(){
-
+					alert('after clicking');
 					var waiterID = $(page).find('[data-waiterID]').val();
 					var password = $(page).find('[data-password]').val();
 					var p = $(page).find( '#p' ).is( ":checked" );
