@@ -346,6 +346,7 @@ window.onerror = function(msg, url, line, col, error) {
 				var data = arguments.length == 3 ? arguments[ arguments.length-1 ] : {};
 
 				alert( 'data is' + JSON.stringify( data ));
+				alert( 'service is' + JSON.stringify( service ));
 
 				// make ajax req
 				return $.ajax({
