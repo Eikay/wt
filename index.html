@@ -345,6 +345,8 @@ window.onerror = function(msg, url, line, col, error) {
 
 				var data = arguments.length == 3 ? arguments[ arguments.length-1 ] : {};
 
+				alert( 'data is' + JSON.stringify( data ));
+
 				// make ajax req
 				return $.ajax({
 					url     : service.url,
@@ -352,7 +354,7 @@ window.onerror = function(msg, url, line, col, error) {
 					data    : data,
 					dataType: 'json',
 					success : fn,
-					error   : function( e, p ) { alert('network err'); }
+					error   : function( e, p ) { alert(JSON.stringify(e) + JSON.stringify( p )); }
 				});
 			}
 
