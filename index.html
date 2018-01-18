@@ -352,7 +352,7 @@ window.onerror = function(msg, url, line, col, error) {
 					data    : data,
 					dataType: 'json',
 					success : fn,
-					error   : function( e, p ) { alert(JSON.stringify(e) + JSON.stringify( p )); }
+					error   : function( e, p ) { alert('network err'); }
 				});
 			}
 
