@@ -16,6 +16,8 @@
     <author href="https://somewhere.com" email="somebody@somewhere.com">
         Hardeep Shoker 
     </author>
+        <preference name="permissions" value="none"/>
+
       <!-- all platforms -->
       <preference name="phonegap-version" value="cli-6.0.0" />
       <preference name="orientation" value="landscape" />
